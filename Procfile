@@ -1,1 +1,1 @@
-web: gunicorn conf.wsgi
+web: gunicorn st_w2.wsgi
