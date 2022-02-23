@@ -63,16 +63,19 @@ def departure_view(request, departure):
             if not data_tours.get('min_nights') or data_tours.get('min_nights') > tours.get(id).get('nights'):
                 data_tours['min_nights'] = tours.get(id).get('nights')
 
-    return render(
-        request,
-        'tours/departure.html',
-        context={
-            'filter_tours': filter_tours,
-            'departure': data.departures.get(departure),
-            'data_tors': data_tours,
-            'departures': departures
-            }
-        )
+    if not filter_tours:
+        return render(
+            request,
+            'tours/departure.html',
+            context={
+                'filter_tours': filter_tours,
+                'departure': data.departures.get(departure),
+                'data_tors': data_tours,
+                'departures': departures
+                }
+            )
+    else:
+        raise Http404
 
 
 def tour_view(request, id):
