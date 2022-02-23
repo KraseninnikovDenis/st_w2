@@ -1,6 +1,7 @@
-from django.shortcuts import render
-from django.http import Http404, HttpResponseNotFound, HttpResponseServerError
 import random as rd
+
+from django.http import Http404, HttpResponseNotFound, HttpResponseServerError
+from django.shortcuts import render
 
 import tours.data as data
 
