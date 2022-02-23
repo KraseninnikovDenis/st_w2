@@ -63,7 +63,7 @@ def departure_view(request, departure):
             if not data_tours.get('min_nights') or data_tours.get('min_nights') > tours.get(id).get('nights'):
                 data_tours['min_nights'] = tours.get(id).get('nights')
 
-    if not filter_tours:
+    if filter_tours:
         return render(
             request,
             'tours/departure.html',
