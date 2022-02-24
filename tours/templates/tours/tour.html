@@ -1,18 +1,12 @@
 {% extends 'tours/base.html' %}
+{% load stars %}
 
 {% block container %} 
   <main class="container">
     <section class="mt-3 pb-5">
-      <h1 class="display-3 mt-4">{{ tour.title }} 
-        {% if tour.stars == "5" %} ★★★★★ 
-        {% elif tour.stars == "4" %} ★★★★
-        {% elif tour.stars == "3" %} ★★★
-        {% elif tour.stars == "2" %} ★★
-        {% elif tour.stars == "1" %} ★
-        {% endif %}     
-      </h1>
+      <h1 class="display-3 mt-4">{{ tour.title }} {{ tour.stars|stars }}</h1>
       <!-- HERO -->
-      <p class="lead">{{ tour.country }} {{ dep }}</p>
+      <p class="lead">{{ tour.country }} {{ flying_from }}</p>
       <img src="{{ tour.picture }}" class="w-75" alt="">
       <p class="my-4 w-75">{{ tour.description }}</p>
       <a href="#" class="btn btn-success btn-lg">Купить тур за {{tour.price}}</a>

@@ -1,4 +1,4 @@
-import random as rd
+from random import sample
 
 from django.http import Http404, HttpResponseNotFound, HttpResponseServerError
 from django.shortcuts import render
@@ -10,19 +10,7 @@ def main_view(request):
     title = data.title
     subtile = data.subtitle
     description = data.description
-    departures = data.departures
-    tours = {}
-    dropped_ids = []
-
-    while True:
-        id = rd.randint(1, len(data.tours.keys()))
-
-        if id not in dropped_ids:
-            dropped_ids.append(id)
-            tours[id] = data.tours.get(id)
-
-        if len(dropped_ids) == 6:
-            break
+    random_tours = dict(sample(data.tours.items(), 6))
 
     return render(
         request,
@@ -31,15 +19,14 @@ def main_view(request):
             "title": title,
             "subtile": subtile,
             "description": description,
-            "tours": tours,
-            'departures': departures
+            "tours": random_tours,
             }
         )
 
 
 def departure_view(request, departure):
     tours = data.tours
-    departures = data.departures
+    flying_from = data.departures.get(departure)
     filter_tours = {}
     data_tours = {
         'count_tours': 0,
@@ -69,9 +56,8 @@ def departure_view(request, departure):
             'tours/departure.html',
             context={
                 'filter_tours': filter_tours,
-                'departure': data.departures.get(departure),
-                'data_tors': data_tours,
-                'departures': departures
+                'flying_from': flying_from,
+                'data_tors': data_tours
                 }
             )
     else:
@@ -80,16 +66,14 @@ def departure_view(request, departure):
 
 def tour_view(request, id):
     tour = data.tours.get(id)
-    departures = data.departures
     if tour:
-        departure = data.departures.get(tour['departure'])
+        flying_from = data.departures.get(tour['departure'])
         return render(
             request,
             'tours/tour.html',
             context={
                 'tour': tour,
-                'dep': departure,
-                'departures': departures
+                'flying_from': flying_from
             }
         )
     else:
