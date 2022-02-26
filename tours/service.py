@@ -6,16 +6,16 @@ import tours.data as data
 def create_context_main():
     """формирует контекст для главной старницы"""
     context = {
-        'title':data.title,
-        'subtile':data.subtitle,
-        'description':data.description,
-        'tours':dict(sample(data.tours.items(), 6))
+        'title': data.title,
+        'subtile': data.subtitle,
+        'description': data.description,
+        'tours': dict(sample(data.tours.items(), 6))
     }
     return context
 
 
 def filter_tours_by_departure(departure):
-    """формирует контекст для сранички туров по направлению. Если по departure 
+    """формирует контекст для сранички туров по направлению. Если по departure
     ничего не найдено, возвращает None"""
     tours = data.tours
     flying_from = data.departures.get(departure)
@@ -41,7 +41,7 @@ def filter_tours_by_departure(departure):
 
             if not data_tours.get('min_nights') or data_tours.get('min_nights') > tours.get(id).get('nights'):
                 data_tours['min_nights'] = tours.get(id).get('nights')
-    
+
     if filter_tours:
         return {
             'filter_tours': filter_tours,
@@ -50,6 +50,7 @@ def filter_tours_by_departure(departure):
             }
     else:
         return None
+
 
 def create_context_selected_tour(id):
     tour = data.tours.get(id)
@@ -61,4 +62,3 @@ def create_context_selected_tour(id):
             }
     else:
         return None
-            

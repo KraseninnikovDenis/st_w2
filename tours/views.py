@@ -1,9 +1,6 @@
-from random import sample
-
 from django.http import Http404, HttpResponseNotFound, HttpResponseServerError
 from django.shortcuts import render
 
-import tours.data as data
 from tours.service import create_context_main, filter_tours_by_departure,\
     create_context_selected_tour
 
@@ -18,8 +15,8 @@ def main_view(request):
 
 
 def departure_view(request, departure):
-    """открывает страницу туров по направлению с выводом всех туров 
-    этого направления и статистикой о количестве найденых туров, мin/мах цене и 
+    """открывает страницу туров по направлению с выводом всех туров
+    этого направления и статистикой о количестве найденых туров, мin/мах цене и
     мin/max колчестве ночей"""
     context = filter_tours_by_departure(departure)
     if context:
