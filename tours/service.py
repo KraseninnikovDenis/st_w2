@@ -20,29 +20,20 @@ def filter_tours_by_departure(departure):
     tours = data.tours
     flying_from = data.departures.get(departure)
     filter_tours = {}
-    data_tours = {
-        'count_tours': 0,
-        'max_price': 0,
-        'max_nights': 0
-    }
+    count_tours = 0
     for id in tours.keys():
         if tours.get(id).get('departure') == departure:
             filter_tours[id] = tours.get(id)
-            data_tours['count_tours'] += 1
-
-            if data_tours.get('max_price') < tours.get(id).get('price'):
-                data_tours['max_price'] = tours.get(id).get('price')
-
-            if not data_tours.get('min_price') or data_tours.get('min_price') > tours.get(id).get('price'):
-                data_tours['min_price'] = tours.get(id).get('price')
-
-            if data_tours.get('max_nights') < tours.get(id).get('nights'):
-                data_tours['max_nights'] = tours.get(id).get('nights')
-
-            if not data_tours.get('min_nights') or data_tours.get('min_nights') > tours.get(id).get('nights'):
-                data_tours['min_nights'] = tours.get(id).get('nights')
+            count_tours += 1
 
     if filter_tours:
+        data_tours = {
+        'count_tours': count_tours,
+        'max_price': max(filter_tours.get(id).get('price') for id in filter_tours),
+        'max_nights': max(filter_tours.get(id).get('nights') for id in filter_tours),
+        'min_price': min(filter_tours.get(id).get('price') for id in filter_tours),
+        'min_nights': min(filter_tours.get(id).get('nights') for id in filter_tours),
+        }
         return {
             'filter_tours': filter_tours,
             'flying_from': flying_from,
